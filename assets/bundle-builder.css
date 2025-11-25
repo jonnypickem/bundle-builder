@@ -1,0 +1,530 @@
+/* Bundle Builder CSS */
+:root {
+  --bb-primary: #000000;
+  --bb-secondary: #555555;
+  --bb-accent: #0051FE;
+  /* Discount Blue */
+  /* Example accent */
+  --bb-bg: #FFFFFF;
+  --bb-border: #EAEAEA;
+  /* Passive Grey */
+  --bb-light-bg: #F9F9F9;
+  --bb-radius: 8px;
+  --bb-spacing: 16px;
+}
+
+.bundle-builder-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Header */
+.bb-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.bb-header h2 {
+  font-family: 'Recoleta Alt', serif;
+  /* Fallback to serif if custom font not loaded */
+  font-weight: 600;
+}
+
+/* Progress Bar */
+.bb-progress-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  position: relative;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bb-step-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.bb-step-wrapper:last-child {
+  flex: 0;
+}
+
+.bb-step-indicator {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid var(--bb-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  position: relative;
+  color: var(--bb-secondary);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.bb-step-indicator svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.bb-step-indicator.active {
+  border-color: var(--bb-accent);
+  color: var(--bb-accent);
+  background: #E6F0FF;
+  /* Light blue highlight */
+}
+
+.bb-step-indicator.completed {
+  background: var(--bb-accent);
+  border-color: var(--bb-accent);
+  color: white;
+}
+
+.bb-progress-line {
+  flex: 1;
+  height: 4px;
+  background: var(--bb-border);
+  margin: 0 10px;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.bb-progress-line.completed {
+  background: var(--bb-accent);
+}
+
+/* Pack Selector */
+.bb-pack-selector {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.bb-pack-option {
+  padding: 8px 16px;
+  border: 1px solid var(--bb-primary);
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  position: relative;
+  background: white;
+  color: var(--bb-primary);
+  font-family: 'Recoleta Alt', serif;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.bb-pack-option:hover {
+  background: var(--bb-light-bg);
+}
+
+.bb-pack-option.selected {
+  border-color: var(--bb-primary);
+  background: var(--bb-primary);
+  color: white;
+}
+
+.bb-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bb-accent);
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 8px;
+  padding: 2px 6px;
+  border-radius: 22px;
+  white-space: nowrap;
+}
+
+.bb-pack-pricing {
+  text-align: center;
+  margin-bottom: 32px;
+  font-family: 'Recoleta Alt', serif;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.bb-pack-pricing-total {
+  color: var(--bb-primary);
+}
+
+.bb-pack-pricing-savings {
+  color: var(--bb-accent);
+}
+
+/* Product Grid */
+.bb-product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 120px;
+  /* Increased space for footer */
+}
+
+.bb-product-card {
+  border: 1px solid var(--bb-border);
+  border-radius: var(--bb-radius);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.bb-product-card.selected {
+  border: 2px solid var(--bb-accent);
+  background-color: #F5F8FF;
+  /* Very light blue background for active state */
+}
+
+.bb-product-image {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  object-position: left center;
+  margin-bottom: 15px;
+}
+
+.bb-product-info {
+  font-size: 11px;
+  color: var(--bb-secondary);
+  margin-bottom: 8px;
+}
+
+.bb-product-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  font-family: 'Recoleta Alt', serif;
+}
+
+.bb-product-description {
+  font-size: 12px;
+  color: var(--bb-secondary);
+  margin-bottom: 12px;
+}
+
+.bb-quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.bb-btn-qty {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+/* Plus button - always black */
+.bb-btn-qty-plus {
+  background: var(--bb-primary);
+  color: white;
+  border: 1px solid var(--bb-primary);
+}
+
+.bb-btn-qty-plus:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Minus button - gray by default, black when active */
+.bb-btn-qty-minus {
+  background: #d8d8d8;
+  color: var(--bb-secondary);
+  border: 1px solid var(--bb-border);
+}
+
+.bb-btn-qty-minus.active {
+  background: var(--bb-primary);
+  color: white;
+  border: 1px solid var(--bb-primary);
+}
+
+.bb-btn-qty-minus:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Footer */
+.bb-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.bb-footer-progress-section {
+  background: var(--bb-primary);
+  /* Black background */
+  padding: 16px 0;
+}
+
+.bb-footer-progress-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.bb-footer-total-section {
+  background: var(--bb-border);
+  /* Grey background */
+  padding: 24px 0;
+}
+
+.bb-footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bb-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.bb-footer-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 320px;
+  /* Fixed width for consistent progress bar */
+}
+
+.bb-progress-pill {
+  flex: 1;
+  /* Pills will divide the available space equally */
+  height: 7px;
+  border-radius: 40px;
+  border: 1px solid white;
+  background: var(--bb-primary);
+  min-width: 20px;
+  /* Minimum width for visibility */
+}
+
+.bb-progress-pill.filled {
+  background: var(--bb-accent);
+}
+
+.bb-progress-text {
+  font-family: 'Recoleta Alt', serif;
+  font-weight: 600;
+  font-size: 20px;
+  color: white;
+  /* White text on black background */
+  margin-left: 8px;
+}
+
+.bb-slots-counter {
+  font-weight: 600;
+  color: var(--bb-primary);
+}
+
+.bb-total-price {
+  font-family: 'Recoleta Alt', serif;
+  font-size: 24px;
+  font-weight: 600;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.bb-total-label {
+  color: var(--bb-primary);
+}
+
+.bb-savings-text {
+  color: var(--bb-accent);
+  font-size: 24px;
+  /* Matches total price size per design */
+}
+
+.bb-btn-primary {
+  background: var(--bb-primary);
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.bb-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+
+  /* Container padding */
+  .bundle-builder-section {
+    padding: 16px;
+  }
+
+  /* Header */
+  .bb-header {
+    margin-bottom: 24px;
+  }
+
+  .bb-header h2 {
+    font-size: 24px;
+  }
+
+  /* Progress Bar */
+  .bb-progress-bar {
+    max-width: 100%;
+    margin-bottom: 24px;
+    padding: 0 10px;
+  }
+
+  .bb-step-indicator {
+    width: 36px;
+    height: 36px;
+  }
+
+  .bb-step-indicator svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .bb-progress-line {
+    margin: 0 8px;
+  }
+
+  /* Pack Selector */
+  .bb-pack-selector {
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .bb-pack-option {
+    padding: 6px 14px;
+    font-size: 13px;
+  }
+
+  /* Pack Pricing */
+  .bb-pack-pricing {
+    font-size: 20px;
+    margin-bottom: 24px;
+  }
+
+  /* Product Grid - 1 card per row */
+  .bb-product-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 140px;
+  }
+
+  .bb-product-card {
+    padding: 12px;
+  }
+
+  .bb-product-image {
+    height: 180px;
+    margin-bottom: 12px;
+  }
+
+  .bb-product-info {
+    font-size: 10px;
+    margin-bottom: 6px;
+  }
+
+  .bb-product-title {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .bb-product-description {
+    font-size: 11px;
+    margin-bottom: 10px;
+  }
+
+  /* Footer */
+  .bb-footer-progress-section {
+    padding: 12px 0;
+  }
+
+  .bb-footer-progress-wrapper {
+    padding: 0 16px;
+  }
+
+  .bb-footer-progress {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .bb-progress-text {
+    font-size: 18px;
+  }
+
+  .bb-footer-total-section {
+    padding: 16px 0;
+  }
+
+  .bb-footer-content {
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 16px;
+    align-items: stretch;
+  }
+
+  .bb-footer-left {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .bb-total-price {
+    font-size: 20px;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .bb-savings-text {
+    font-size: 20px;
+  }
+
+  .bb-footer-actions {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .bb-btn-primary {
+    flex: 1;
+    padding: 14px 18px;
+    font-size: 15px;
+  }
+}

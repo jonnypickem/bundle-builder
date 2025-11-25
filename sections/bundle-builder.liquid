@@ -1,0 +1,187 @@
+{% comment %}
+  Bundle Builder Section - Dynamic Steps & Products
+  Allows adding/removing steps and products via Theme Customizer blocks
+{% endcomment %}
+
+{{ 'bundle-builder.css' | asset_url | stylesheet_tag }}
+
+<div id="bundle-builder-root" class="bundle-builder-section">
+  <div class="bundle-loading">Loading Bundle Builder...</div>
+</div>
+
+<script>
+  // Shopify configuration
+  window.Shopify = window.Shopify || {};
+  window.Shopify.routes = window.Shopify.routes || { root: '/' };
+
+  // Build steps from blocks
+  const steps = {};
+  {% for block in section.blocks %}
+    {% if block.type == 'step' %}
+      const stepKey = 'step{{ forloop.index }}';
+      steps[stepKey] = {
+        title: {{ block.settings.step_title | json }},
+        products: []
+      };
+    {% elsif block.type == 'product' %}
+      {% assign product = block.settings.product %}
+      {% if product != blank %}
+        const currentStep = 'step' + {{ block.settings.step_number }};
+        if (!steps[currentStep]) {
+          steps[currentStep] = { title: 'Step ' + {{ block.settings.step_number }}, products: [] };
+        }
+        steps[currentStep].products.push({
+          id: {{ product.id }},
+          title: {{ product.title | json }},
+          handle: {{ product.handle | json }},
+          image: {{ product.featured_image | image_url: width: 400 | json }},
+          price: {{ product.price }},
+          variants: [
+            {% for variant in product.variants %}
+              {
+                id: {{ variant.id }},
+                title: {{ variant.title | json }},
+                price: {{ variant.price }},
+                available: {{ variant.available | json }}
+              }{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+          ]
+        });
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  // Bundle data from Liquid
+  window.BundleData = {
+    ...steps,
+    settings: {
+      packSizes: {{ section.settings.pack_sizes | split: ',' | json }},
+      discount4: {{ section.settings.discount_4 | default: 0 }},
+      discount6: {{ section.settings.discount_6 | default: 10 }},
+      discount12: {{ section.settings.discount_12 | default: 15 }}
+    }
+  };
+</script>
+
+<script type="module" src="{{ 'bundle-builder.js' | asset_url }}"></script>
+
+{% schema %}
+{
+  "name": "Bundle Builder",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Pack Configuration"
+    },
+    {
+      "type": "text",
+      "id": "pack_sizes",
+      "label": "Available Pack Sizes",
+      "default": "4,6,12",
+      "info": "Comma-separated values (e.g., 4,6,12)"
+    },
+    {
+      "type": "number",
+      "id": "discount_4",
+      "label": "Discount for 4-pack (€)",
+      "default": 0
+    },
+    {
+      "type": "number",
+      "id": "discount_6",
+      "label": "Discount for 6-pack (€)",
+      "default": 10
+    },
+    {
+      "type": "number",
+      "id": "discount_12",
+      "label": "Discount for 12-pack (€)",
+      "default": 15
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_title",
+          "label": "Step Title",
+          "default": "Select Products"
+        }
+      ]
+    },
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "range",
+          "id": "step_number",
+          "label": "Step Number",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "default": 1,
+          "info": "Which step should this product appear in?"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bundle Builder",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "step_title": "Select Your Pack"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "step_number": 1
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "step_number": 1
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_title": "Add Extras"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "step_number": 2
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_title": "Final Touches"
+          }
+        },
+        {
+          "type": "product",
+          "settings": {
+            "step_number": 3
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

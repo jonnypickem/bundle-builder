@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bundle Builder Preview</title>
+    <link rel="stylesheet" href="assets/bundle-builder.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="bundle-builder-root" class="bundle-builder-section">
+        <div class="bundle-loading">Loading Bundle Builder...</div>
+    </div>
+
+    <script>
+        // Mock Shopify Routes
+        window.Shopify = {
+            routes: { root: '/' }
+        };
+
+        // Mock Bundle Data
+        window.BundleData = {
+            step1: {
+                title: "Select Your Pack",
+                products: [
+                    { id: 101, title: "Classic T-Shirt", handle: "classic-t-shirt", image: "https://via.placeholder.com/400x400?text=T-Shirt", price: 2500, variants: [{ id: 10101, title: "Default" }] },
+                    { id: 102, title: "Denim Jeans", handle: "denim-jeans", image: "https://via.placeholder.com/400x400?text=Jeans", price: 5500, variants: [{ id: 10201, title: "Default" }] },
+                    { id: 103, title: "Sneakers", handle: "sneakers", image: "https://via.placeholder.com/400x400?text=Sneakers", price: 8500, variants: [{ id: 10301, title: "Default" }] },
+                    { id: 104, title: "Cap", handle: "cap", image: "https://via.placeholder.com/400x400?text=Cap", price: 1500, variants: [{ id: 10401, title: "Default" }] },
+                    { id: 105, title: "Socks", handle: "socks", image: "https://via.placeholder.com/400x400?text=Socks", price: 1000, variants: [{ id: 10501, title: "Default" }] },
+                    { id: 106, title: "Hoodie", handle: "hoodie", image: "https://via.placeholder.com/400x400?text=Hoodie", price: 4500, variants: [{ id: 10601, title: "Default" }] }
+                ]
+            },
+            step2: {
+                title: "Add Extras",
+                products: [
+                    { id: 201, title: "Gift Box", handle: "gift-box", image: "https://via.placeholder.com/400x400?text=Gift+Box", price: 500, variants: [{ id: 20101, title: "Default" }] },
+                    { id: 202, title: "Stickers", handle: "stickers", image: "https://via.placeholder.com/400x400?text=Stickers", price: 200, variants: [{ id: 20201, title: "Default" }] }
+                ]
+            },
+            step3: {
+                title: "Final Touches",
+                products: [
+                    { id: 301, title: "Express Shipping", handle: "shipping", image: "https://via.placeholder.com/400x400?text=Shipping", price: 1000, variants: [{ id: 30101, title: "Default", price: 1000, available: true }] }
+                ]
+            },
+            settings: {
+                packSizes: [4, 6, 12],
+                discount4: 0,
+                discount6: 10,
+                discount12: 15
+            }
+        };
+
+        // Mock Fetch for Cart
+        const originalFetch = window.fetch;
+        window.fetch = async (url, options) => {
+            if (url.includes('cart/add.js')) {
+                console.log('Added to cart:', JSON.parse(options.body));
+                return { ok: true, json: async () => ({}) };
+            }
+            return originalFetch(url, options);
+        };
+    </script>
+
+    <script type="module" src="assets/bundle-builder.js"></script>
+
+</body>
+
+</html>
