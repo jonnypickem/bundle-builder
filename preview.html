@@ -30,19 +30,19 @@
             step1: {
                 title: "Select Your Pack",
                 products: [
-                    { id: 101, title: "Classic T-Shirt", handle: "classic-t-shirt", image: "https://via.placeholder.com/400x400?text=T-Shirt", price: 2500, variants: [{ id: 10101, title: "Default" }] },
-                    { id: 102, title: "Denim Jeans", handle: "denim-jeans", image: "https://via.placeholder.com/400x400?text=Jeans", price: 5500, variants: [{ id: 10201, title: "Default" }] },
-                    { id: 103, title: "Sneakers", handle: "sneakers", image: "https://via.placeholder.com/400x400?text=Sneakers", price: 8500, variants: [{ id: 10301, title: "Default" }] },
-                    { id: 104, title: "Cap", handle: "cap", image: "https://via.placeholder.com/400x400?text=Cap", price: 1500, variants: [{ id: 10401, title: "Default" }] },
-                    { id: 105, title: "Socks", handle: "socks", image: "https://via.placeholder.com/400x400?text=Socks", price: 1000, variants: [{ id: 10501, title: "Default" }] },
-                    { id: 106, title: "Hoodie", handle: "hoodie", image: "https://via.placeholder.com/400x400?text=Hoodie", price: 4500, variants: [{ id: 10601, title: "Default" }] }
+                    { id: 101, title: "Classic T-Shirt", handle: "classic-t-shirt", image: "https://via.placeholder.com/400x400?text=T-Shirt", price: 2500, variants: [{ id: 10101, title: "Default", price: 2500, available: true }] },
+                    { id: 102, title: "Denim Jeans", handle: "denim-jeans", image: "https://via.placeholder.com/400x400?text=Jeans", price: 5500, variants: [{ id: 10201, title: "Default", price: 5500, available: true }] },
+                    { id: 103, title: "Sneakers", handle: "sneakers", image: "https://via.placeholder.com/400x400?text=Sneakers", price: 8500, variants: [{ id: 10301, title: "Default", price: 8500, available: true }] },
+                    { id: 104, title: "Cap", handle: "cap", image: "https://via.placeholder.com/400x400?text=Cap", price: 1500, variants: [{ id: 10401, title: "Default", price: 1500, available: true }] },
+                    { id: 105, title: "Socks", handle: "socks", image: "https://via.placeholder.com/400x400?text=Socks", price: 1000, variants: [{ id: 10501, title: "Default", price: 1000, available: true }] },
+                    { id: 106, title: "Hoodie", handle: "hoodie", image: "https://via.placeholder.com/400x400?text=Hoodie", price: 4500, variants: [{ id: 10601, title: "Default", price: 4500, available: true }] }
                 ]
             },
             step2: {
                 title: "Add Extras",
                 products: [
-                    { id: 201, title: "Gift Box", handle: "gift-box", image: "https://via.placeholder.com/400x400?text=Gift+Box", price: 500, variants: [{ id: 20101, title: "Default" }] },
-                    { id: 202, title: "Stickers", handle: "stickers", image: "https://via.placeholder.com/400x400?text=Stickers", price: 200, variants: [{ id: 20201, title: "Default" }] }
+                    { id: 201, title: "Gift Box", handle: "gift-box", image: "https://via.placeholder.com/400x400?text=Gift+Box", price: 500, variants: [{ id: 20101, title: "Default", price: 500, available: true }] },
+                    { id: 202, title: "Stickers", handle: "stickers", image: "https://via.placeholder.com/400x400?text=Stickers", price: 200, variants: [{ id: 20201, title: "Default", price: 200, available: true }] }
                 ]
             },
             step3: {
@@ -55,7 +55,16 @@
                 packSizes: [4, 6, 12],
                 discount4: 0,
                 discount6: 10,
-                discount12: 15
+                discount12: 15,
+                freeShippingThreshold: 3500 // 35 EUR in cents - catalog predefined amount
+            },
+            // Market data for testing (simulates Shopify Markets/Catalogs)
+            market: {
+                currencyCode: 'EUR',
+                currencySymbol: '€',
+                countryCode: 'DE',
+                locale: 'de-DE',
+                moneyFormat: '€{{amount_with_comma_separator}}'
             }
         };
 

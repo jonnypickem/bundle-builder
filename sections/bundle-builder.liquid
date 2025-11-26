@@ -52,13 +52,24 @@
   {% endfor %}
 
   // Bundle data from Liquid
+  // Market-aware pricing: prices from product.price/variant.price are automatically
+  // in the customer's market currency when Shopify Markets is enabled
   window.BundleData = {
     ...steps,
     settings: {
       packSizes: {{ section.settings.pack_sizes | split: ',' | json }},
       discount4: {{ section.settings.discount_4 | default: 0 }},
       discount6: {{ section.settings.discount_6 | default: 10 }},
-      discount12: {{ section.settings.discount_12 | default: 15 }}
+      discount12: {{ section.settings.discount_12 | default: 15 }},
+      freeShippingThreshold: {{ section.settings.free_shipping_threshold | default: 0 }}
+    },
+    // Market & Currency info from Shopify Markets/Catalogs
+    market: {
+      currencyCode: {{ cart.currency.iso_code | default: shop.currency | json }},
+      currencySymbol: {{ cart.currency.symbol | default: '€' | json }},
+      countryCode: {{ localization.country.iso_code | default: 'DE' | json }},
+      locale: {{ request.locale.iso_code | default: 'de-DE' | json }},
+      moneyFormat: {{ shop.money_format | json }}
     }
   };
 </script>
@@ -83,20 +94,34 @@
     {
       "type": "number",
       "id": "discount_4",
-      "label": "Discount for 4-pack (€)",
-      "default": 0
+      "label": "Discount for 4-pack",
+      "default": 0,
+      "info": "Amount in your market's currency"
     },
     {
       "type": "number",
       "id": "discount_6",
-      "label": "Discount for 6-pack (€)",
-      "default": 10
+      "label": "Discount for 6-pack",
+      "default": 10,
+      "info": "Amount in your market's currency"
     },
     {
       "type": "number",
       "id": "discount_12",
-      "label": "Discount for 12-pack (€)",
-      "default": 15
+      "label": "Discount for 12-pack",
+      "default": 15,
+      "info": "Amount in your market's currency"
+    },
+    {
+      "type": "header",
+      "content": "Free Shipping Configuration"
+    },
+    {
+      "type": "number",
+      "id": "free_shipping_threshold",
+      "label": "Free Shipping Threshold",
+      "default": 0,
+      "info": "Minimum order value (in cents) for free shipping. Set to 0 to disable. This should match your Shopify shipping settings for the current market."
     }
   ],
   "blocks": [
